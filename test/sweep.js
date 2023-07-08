@@ -246,7 +246,10 @@ describe("mine sweeping it", async function (){
                 let move = bestMoves[Math.floor(Math.random() * bestMoves.length)];
                 await makeMove(browser, move.x, move.y);
 
-                if(board[move.x][move.y].value === -1) {
+                let smilyClasses = await smilyButton.getAttribute('class');
+                if(smilyClasses?.includes('hd_top-area-face-win') ?? false){
+                    running = false;
+                } else if(board[move.x][move.y].value === -1) {
                     // Retry
                     board = {};
                     moves = [];
@@ -263,13 +266,10 @@ describe("mine sweeping it", async function (){
                             };
                         }
                     }
+                    
+                    browser.pause(300);
                     smilyButton.click();
                 }
-            }
-
-            let smilyClasses = await smilyButton.getAttribute('class');
-            if(smilyClasses?.includes('hd_top-area-face-win') ?? false){
-                running = false;
             }
         }while(running);
         
