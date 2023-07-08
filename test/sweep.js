@@ -266,6 +266,11 @@ describe("mine sweeping it", async function (){
                     smilyButton.click();
                 }
             }
+
+            let smilyClasses = await smilyButton.getAttribute('class');
+            if(smilyClasses?.includes('hd_top-area-face-win') ?? false){
+                running = false;
+            }
         }while(running);
         
         browser.saveScreenshot('./screenshots/winning.png');
